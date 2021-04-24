@@ -1,6 +1,6 @@
-package banking;
+package com.banking;
 
-import static banking.TransactionType.*;
+import static com.banking.TransactionType.*;
 
 /**
  * @author wpollock

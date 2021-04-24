@@ -1,4 +1,4 @@
-package banking;
+package com.banking;
 
 import java.time.*;
 
