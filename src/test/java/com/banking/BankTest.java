@@ -1,10 +1,8 @@
 package com.banking;
-import org.junit.*;  // The various annotations
-import static org.junit.Assert.*; //AssertX methods
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.runner.JUnitCore; // Test runner
-
+import org.junit.jupiter.api.Test;
 import java.util.List;
 import java.util.SortedSet;
 
@@ -16,22 +14,22 @@ public class BankTest {
 
     // Test Fixture:
     @BeforeEach
-    void setUp () {
+    public void init() {
         bank = new Bank( "My Bank" );
         custID = bank.addCustomer("Piffl", "Hymie");
         customer = bank.getCustomer( custID );
         savingsAccount = customer.addSavingsAccount( 0.00, "Test Account" );
     }
     @Test
-    void testBankConstructor(){
-        Bank bank = new Bank("Bank of Pollock");
-        assertEquals("Bank of Pollock", bank.getNAME());
+    public void testBankConstructor(){
+        Bank bank1 = new Bank("Bank of Pollock");
+        assertEquals("Bank of Pollock", bank1.getNAME());
     }
 
     // Test a deposit of $10.00 works:
     @Test
     @DisplayName("Account.deposit Tests")
-    void depositShouldIncreaseBalance () {
+    public void depositShouldIncreaseBalance () {
         final double initialBalance = savingsAccount.getBalance();
         final double amount = 10.00;
         savingsAccount.deposit( amount );
@@ -40,18 +38,18 @@ public class BankTest {
     }
 
     @Test
-    void testBankMain(){
+    public void testBankMain(){
         // No Test Needed
     }
 
     @Test
-    void testAddCustomerGUI(){
+    public void testAddCustomerGUI(){
         // No Test - Too difficult to test.
     }
 
     @Test
     @DisplayName("Bank test Add Customer")
-    void testAddCustomer(){
+    public void testAddCustomer(){
         Bank bank1;
         String cust;
         Customer customer1=null;
@@ -61,7 +59,7 @@ public class BankTest {
     }
     @Test
     @DisplayName("Bank test Add Customer #2")
-    void testAddCustomer2(){
+    public void testAddCustomer2(){
         Bank bank1;
         String cust;
         Customer customer1=null;
@@ -72,48 +70,55 @@ public class BankTest {
 
     @Test
     @DisplayName("Bank test Get Customer")
-    void testGetCustomer(){
+    public void testGetCustomer(){
         Bank bank1;
         String cust;
         Customer customer1=null;
         bank1 = new Bank("Test Bank");
         cust = bank1.addCustomer("Pollock", "Wayne");
         customer1=bank1.getCustomer(cust);
-        assertNotNull("Should not be null",customer1);
+        assertNotNull(customer1);
     }
 
     @Test
     @DisplayName("Bank test: Get Customer (List)")
-    void testGetCustomer2(){
+    public void testGetCustomer2(){
         List<Customer> custList;
         custList=bank.getCustomer("Piffl","Hymie");
-        assertTrue("Should return a List of matching Customer(s), list size > 0",custList.size()>0);
+        assertTrue(custList.size()>0, "Should return a list of matching Customer(s), list size>0");
     }
 
     @Test
     @DisplayName("Bank test: Get Customer (List)#2")
-    void testGetCustomer3(){
+    public void testGetCustomer3(){
         List<Customer> custList;
         custList=bank.getCustomer("DoesNotExist","ThisGuy");
-        assertTrue("Should return an empty list",custList.isEmpty());
+        assertTrue(custList.isEmpty(), "Should return an empty list");
     }
 
     @Test
     @DisplayName("Bank test: Get All Customers")
-    void testgetAllCustomers(){
+    public void testGetAllCustomers(){
         SortedSet<Customer> custList;
         custList=bank.getAllCustomers();
-        assertTrue("Should return a list of all customers, list size >0",custList.size()>0);
+        assertTrue(custList.size()>0, "Should return a list of all customers, list size >0");
     }
     @Test
     @DisplayName("Bank test: Get All Customers #2")
-    void testgetAllCustomers2(){
+    public void testgetAllCustomers2(){
         SortedSet<Customer> custList;
         custList=bank.getAllCustomers();
         bank.removeCustomer(custID);
-        assertTrue("Should return an empty list",custList.size()>0);
+        assertTrue(custList.size()>0,"Should return an empty list");
     }
 
+    @Test
+    @DisplayName("Bank test: Remove a customer")
+    public void testRemoveCustomer(){
+        //bank = new Bank( "My Bank" );
+        bank.removeCustomer(custID);
+        assertNull(bank.getCustomer(custID),"Should return a null object");
 
+    }
 
 }
