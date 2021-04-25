@@ -92,7 +92,7 @@ public class BankTest {
 
     @Test
     @DisplayName("Bank test: Get Customer (List)#2")
-    void testGetCustomer2(){
+    void testGetCustomer3(){
         List<Customer> custList;
         custList=bank.getCustomer("DoesNotExist","ThisGuy");
         assertTrue("Should return an empty list",custList.isEmpty());
