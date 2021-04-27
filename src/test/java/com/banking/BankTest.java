@@ -11,6 +11,8 @@ public class BankTest {
     private Customer customer;
     private String custID;
     private Account savingsAccount;
+    private Account savingsAccount2;
+    private Account savingsAccount3;
 
     // Test Fixture:
     @BeforeEach
@@ -103,13 +105,44 @@ public class BankTest {
         custList=bank.getAllCustomers();
         assertTrue(custList.size()>0, "Should return a list of all customers, list size >0");
     }
+
     @Test
     @DisplayName("Bank test: Get All Customers #2")
     public void testgetAllCustomers2(){
         SortedSet<Customer> custList;
-        custList=bank.getAllCustomers();
         bank.removeCustomer(custID);
+        custList=bank.getAllCustomers();
         assertTrue(custList.size()>0,"Should return an empty list");
+    }
+
+    @Test
+    @DisplayName("Bank test: Get All Customers #3")
+    public void testgetAllCustomers3(){
+        Bank bank2=null;
+        String custID2;
+        bank2 = new Bank( "My Bank" );
+        bank2.addCustomer("Piffl", "Hymie");
+        bank2.addCustomer("Guarv", "Jose");
+        bank2.addCustomer("Windez", "Fanz");
+        bank2.addCustomer("Feeko", "Lamo");
+        SortedSet<Customer> custList;
+        custList=bank.getAllCustomers();
+        assertTrue(custList.size()==4,"Should return a list with four items.");
+    }
+
+    @Test
+    @DisplayName("Bank test: Get All Customers #4")
+    public void testgetAllCustomers4(){
+        Bank bank2=null;
+        String custID2;
+        bank2 = new Bank( "My Bank" );
+        bank2.addCustomer("Piffl", "Hymie");
+        bank2.addCustomer("Guarv", "Jose");
+        bank2.addCustomer("Windez", "Fanz");
+        bank2.addCustomer("Feeko", "Lamo");
+        SortedSet<Customer> custList;
+        custList=bank.getAllCustomers();
+        assertEquals("Piffl",custList.first(), "Should return the first customer, Piffl");
     }
 
     @Test
@@ -117,8 +150,37 @@ public class BankTest {
     public void testRemoveCustomer(){
         //bank = new Bank( "My Bank" );
         bank.removeCustomer(custID);
-        assertNull(bank.getCustomer(custID),"Should return a null object");
-
+        assertNull(bank.getCustomer(custID),"Should return a null");
     }
+
+    @Test
+    @DisplayName("Bank test: Get all Accounts")
+    public void testGetAllAccounts(){
+        SortedSet<Account> accountList;
+        accountList = bank.getAllAccounts();
+        assertEquals(1, accountList.size(), "Account list should be equal to 1");
+    }
+
+    @Test
+    @DisplayName("Bank test: Get all Accounts #2")
+    public void testGetAllAccounts2(){
+        savingsAccount2 = customer.addSavingsAccount( 0.00, "Second Account" );
+        SortedSet<Account> accountList;
+        accountList = bank.getAllAccounts();
+        assertEquals(2, accountList.size(), "Account list should be equal to 2");
+    }
+
+    @Test
+    @DisplayName("Bank test: Get all Accounts #3")
+    public void testGetAllAccounts3(){
+        savingsAccount2 = customer.addSavingsAccount( 0.00, "Second Account" );
+        savingsAccount3 = customer.addSavingsAccount( 0.00, "Third Account" );
+        SortedSet<Account> accountList;
+        accountList = bank.getAllAccounts();
+        assertEquals(3, accountList.size(), "Account list should be equal to 3");
+    }
+
+
+
 
 }
