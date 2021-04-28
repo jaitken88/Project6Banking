@@ -23,9 +23,17 @@ public class BankTest {
         savingsAccount = customer.addSavingsAccount( 0.00, "Test Account" );
     }
     @Test
+    @DisplayName("Testing Bank Constructor #2")
     public void testBankConstructor(){
         Bank bank1 = new Bank("Bank of Pollock");
         assertEquals("Bank of Pollock", bank1.getNAME());
+    }
+
+    @Test
+    @DisplayName("Testing Bank Constructor #2")
+    public void testBankConstructor2(){
+        Bank bank1 = new Bank(" ");
+        assertThrows(IllegalArgumentException.class, () -> new Bank(" "));
     }
 
     // Test a deposit of $10.00 works:
@@ -40,8 +48,44 @@ public class BankTest {
     }
 
     @Test
+    @DisplayName("Account.deposit Tests #2")
+    public void testNegativeDeposit() {
+        final double initialBalance = savingsAccount.getBalance();
+        final double amount = -10.00;
+        savingsAccount.deposit( amount );
+        assertThrows(IllegalArgumentException.class,()->savingsAccount.deposit(amount));
+    }
+
+    @Test
+    @DisplayName("Account.deposit Tests #3")
+    public void testLargeDeposit() {
+        final double initialBalance = savingsAccount.getBalance();
+        final double amount = 999999999+9999999+999999999+999999999+789894984;
+        savingsAccount.deposit( amount );
+        assertThrows(IllegalArgumentException.class,()->savingsAccount.deposit(amount));
+    }
+    @Test
+    @DisplayName("Account.deposit Tests #4")
+    public void testZeroDeposit() {
+        final double initialBalance = savingsAccount.getBalance();
+        final double amount = 0;
+        savingsAccount.deposit( amount );
+        assertThrows(IllegalArgumentException.class,()->savingsAccount.deposit(amount));
+    }
+
+    @Test
+    @DisplayName("Account.deposit Tests #5")
+    public void testBlankDeposit() {
+        final double initialBalance = savingsAccount.getBalance();
+        final double amount = Integer.valueOf("");
+        savingsAccount.deposit( amount );
+        assertThrows(IllegalArgumentException.class,()->savingsAccount.deposit(amount));
+    }
+
+    @Test
     public void testBankMain(){
-        // No Test Needed
+        String[] s={"123456789"};
+        Bank.main(s);
     }
 
     @Test
