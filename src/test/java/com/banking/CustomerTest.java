@@ -41,7 +41,7 @@ public class CustomerTest {
         Only 1 day of interest should have been added So, the YTD interest of this account should
         be ((balance)*(1 + (newSavingsAccount.getDefaultInterestRate() * 0.01)*(1/365)))
          */
-        assertEquals(ytdInterest, (initialBalance * rate * 0.01)*(1.0/365));
+        assertEquals((initialBalance * rate * 0.01)*(1.0/365),ytdInterest );
     }
     @Test
     @DisplayName ("Customer test addSavingsAccount")
