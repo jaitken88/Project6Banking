@@ -77,7 +77,7 @@ class SavingsAccountTest {
                         (startingBalance-amount) + "but was " + finalBalance );
     }
 
-    //Test a transfer of 1.00 from test1 to test2
+    //Test a transfer of 10.00 from testSavingsAccount1 to testSavingsAccount2
     @Test
     @DisplayName("Account.transfer Test")
     void transferBetweenAccounts(){

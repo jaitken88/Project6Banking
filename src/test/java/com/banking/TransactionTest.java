@@ -15,7 +15,7 @@ public class TransactionTest {
     public void init(){
         type = TransactionType.DEPOSIT;
         amount = 20.00;
-        description = "Test Transaction";
+        description = "Test Deposit Transaction";
     }
 
     //Test the constructor for Transaction
@@ -23,9 +23,9 @@ public class TransactionTest {
     @DisplayName("Transaction constructor test")
     public void testConstructor(){
         transaction = new Transaction(type, amount, description);
-        assertEquals(transaction.getType(), type);
-        assertEquals(transaction.getAmount(), amount);
-        assertEquals(transaction.getDescription(), description);
+        assertEquals(type,transaction.getType());
+        assertEquals(amount,transaction.getAmount());
+        assertEquals(description,transaction.getDescription());
     }
 
 }

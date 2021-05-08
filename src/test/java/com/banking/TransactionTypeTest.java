@@ -10,7 +10,7 @@ public class TransactionTypeTest {
     //Test for all enum constants
     @Test
     @DisplayName("TransactionType test")
-    public void testTransactionType(){
+        public void testTransactionType(){
         assertNotNull("DEPOSIT");
         assertNotNull("WITHDRAWAL");
         assertNotNull("INTEREST");
