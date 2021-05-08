@@ -8,27 +8,30 @@ class SavingsAccountTest {
     private Bank bank;
     private Customer customer;
     private String custID;
-    private Account savingsAccount;
-    private SavingsAccount test1;
-    private SavingsAccount test2;
+    private SavingsAccount savingsAccount;
+    private SavingsAccount testSavingsAccount1;
+    private SavingsAccount testSavingsAccount2;
     private double interestRate;
     private double balance;
-    private String account1;
-    private String account2;
     private double transfer;
+    private double initialBalance;
+    private String newSavingsAccountDescription;
+    private String testSavingsAccount1Description;
+    private String testSavingsAccount2Description;
 
     // Test Fixture:
     @BeforeEach
     void setUp () {
-        bank = new Bank( "My Bank" );
-        custID = bank.addCustomer("Piffl", "Hymie");
+        bank = new Bank( "BEAM Bank" );
+        custID = bank.addCustomer("Dude", "Cool");
         customer = bank.getCustomer( custID );
-        savingsAccount = customer.addSavingsAccount( 0.00, "Test Account" );
+        initialBalance = 1000.0;
+        newSavingsAccountDescription = "Test Savings Account";
+        savingsAccount = customer.addSavingsAccount( 0.00,newSavingsAccountDescription);
         interestRate = 2.1;
-        balance = 5.00;
-        account1 = "First test";
-        account2 = "Second test";
-        transfer = 1.00;
+        testSavingsAccount1Description = "Test Savings Account1";
+        testSavingsAccount2Description = "Test Savings Account2";
+
     }
 
     // Test the constructors in SavingsAccount
@@ -36,49 +39,53 @@ class SavingsAccountTest {
     @DisplayName("SavingsAccount constructor tests")
     void testConstructors(){
         //test1 tests the SavingsAccount constructor that takes three parameters
-        test1 = new SavingsAccount(customer, balance, account1);
-        assertEquals(bank.getCustomer(test1.getCustomerId()), customer);
-        assertEquals(test1.getBalance(), balance);
-        assertEquals(test1.getAccountDescription(), account1);
+        testSavingsAccount1 = new SavingsAccount(customer, initialBalance, testSavingsAccount1Description);
+        assertEquals(bank.getCustomer(testSavingsAccount1.getCustomerId()), customer);
+        assertEquals(testSavingsAccount1.getBalance(), initialBalance);
+        assertEquals(testSavingsAccount1.getAccountDescription(), testSavingsAccount1Description);
         //test2 tests the SavingsAccount constructor that takes four parameters
-        test2 = new SavingsAccount(customer, balance, account2, interestRate);
-        assertEquals(bank.getCustomer(test1.getCustomerId()), customer);
-        assertEquals(test2.getBalance(), balance);
-        assertEquals(test2.getAccountDescription(), account2);
-        assertEquals(test2.getDefaultInterestRate(), interestRate);
+        testSavingsAccount2 = new SavingsAccount(customer, balance, testSavingsAccount2Description, interestRate);
+        assertEquals(bank.getCustomer(testSavingsAccount2.getCustomerId()), customer);
+        assertEquals(testSavingsAccount2.getBalance(), initialBalance);
+        assertEquals(testSavingsAccount2.getAccountDescription(), testSavingsAccount2Description);
+        assertEquals(testSavingsAccount2.getDefaultInterestRate(), interestRate);
     }
 
     // Test a deposit of $10.00 works:
     @Test
     @DisplayName("Account.deposit Tests")
     void depositShouldIncreaseBalance () {
-        final double initialBalance = savingsAccount.getBalance();
+        final double startingBalance = savingsAccount.getBalance();
         final double amount = 10.00;
         savingsAccount.deposit( amount );
         final double finalBalance = savingsAccount.getBalance();
-        assertEquals( finalBalance, initialBalance + amount,
+        assertEquals( finalBalance, startingBalance + amount,
                 "Balance should be " +
-                        (initialBalance+amount) + "but was " + finalBalance );
+                        (startingBalance+amount) + "but was " + finalBalance );
     }
 
     // Test a withdrawal of $10.00 works:
     @Test
-    @DisplayName("Account.withdraw Tests")
+    @DisplayName("Account.withdrawal Tests")
     void withdrawalShouldDecreaseBalance () {
-        final double initialBalance = savingsAccount.getBalance();
+        final double startingBalance = savingsAccount.getBalance();
         final double amount = 10.00;
         savingsAccount.withdraw( amount );
         final double finalBalance = savingsAccount.getBalance();
-        assertEquals( finalBalance, initialBalance - amount,
+        assertEquals( finalBalance, startingBalance - amount,
                 "Balance should be " +
-                        (initialBalance-amount) + "but was " + finalBalance );
+                        (startingBalance-amount) + "but was " + finalBalance );
     }
 
     //Test a transfer of 1.00 from test1 to test2
     @Test
     @DisplayName("Account.transfer Test")
     void transferBetweenAccounts(){
-        test1.transfer(test1, test2, transfer);
-        assertEquals(test1.getBalance() + transfer, test2.getBalance() - transfer);
+        final double transfer = 100.00;
+        final double testSavingsAccount1startingBalance = testSavingsAccount1.getBalance();
+        final double testSavingsAccount2startingBalance = testSavingsAccount2.getBalance();
+        testSavingsAccount1.transfer(testSavingsAccount1, testSavingsAccount2,transfer);
+        assertEquals(testSavingsAccount1startingBalance - transfer, testSavingsAccount1.getBalance());
+        assertEquals(testSavingsAccount2startingBalance + transfer, testSavingsAccount2.getBalance());
     }
 }
