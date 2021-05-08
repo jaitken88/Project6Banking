@@ -6,13 +6,15 @@ import org.junit.jupiter.api.Test;
 
 public class CustomerTest {
     private Customer cust;
+    private String custID;
     private SavingsAccount newSavingsAccount;
     private double initialBalance;
     private String newSavingsAccountDescription;
-    private double ytdInterest;
+
     //test fixture
     @BeforeEach
     public void init() {
+        custID = "ABCDEFG";
         initialBalance = 0.0;
         newSavingsAccountDescription = "Test Savings Account";
     }
@@ -28,7 +30,7 @@ public class CustomerTest {
     @Test
     @DisplayName ("Customer test ytdInterest")
     public void testYTDInterest(){
-        ytdInterest = cust.ytdInterest();
+        double ytdInterest = cust.ytdInterest();
         /*
         It has been 126 days since January 1st, 2021 (today is May 7th.) So, the YTD interest of this account should
         be ((balance)*(1 + (newSavingsAccount.getDefaultInterestRate() * 0.01)*(126/365)))
@@ -41,5 +43,11 @@ public class CustomerTest {
         newSavingsAccount = cust.addSavingsAccount(initialBalance, newSavingsAccountDescription);
         assertEquals(initialBalance, newSavingsAccount.getBalance());
         assertEquals(newSavingsAccountDescription, newSavingsAccount.getAccountDescription());
+    }
+    @Test
+    @DisplayName ("Customer test removeAccount")
+    public void testRemoveAccount(){
+        cust.removeAccount(custID);
+        assertNull(cust.getAccount(custID));
     }
 }

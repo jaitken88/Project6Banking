@@ -15,6 +15,7 @@ class SavingsAccountTest {
     private double balance;
     private String account1;
     private String account2;
+    private double transfer;
 
     // Test Fixture:
     @BeforeEach
@@ -27,6 +28,7 @@ class SavingsAccountTest {
         balance = 5.00;
         account1 = "First test";
         account2 = "Second test";
+        transfer = 1.00;
     }
 
     // Test the constructors in SavingsAccount
@@ -72,5 +74,11 @@ class SavingsAccountTest {
                         (initialBalance-amount) + "but was " + finalBalance );
     }
 
-
+    //Test a transfer of 1.00 from test1 to test2
+    @Test
+    @DisplayName("Account.transfer Test")
+    void transferBetweenAccounts(){
+        test1.transfer(test1, test2, transfer);
+        assertEquals(test1.getBalance() + transfer, test2.getBalance() - transfer);
+    }
 }
