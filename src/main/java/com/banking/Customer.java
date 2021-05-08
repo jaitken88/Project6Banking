@@ -78,7 +78,7 @@ public class Customer implements Comparable<Customer> {
     }
 
     /** Returns the total interest paid to this customer for year-to-date
-     * @return YTD interest payed
+     * @return YTD interest paid
      */
     public double ytdInterest () {
         return 0.0;  // Stub

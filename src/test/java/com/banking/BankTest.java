@@ -120,5 +120,4 @@ public class BankTest {
         assertNull(bank.getCustomer(custID),"Should return a null object");
 
     }
-
 }
