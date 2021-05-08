@@ -3,37 +3,43 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
-import java.util.SortedSet;
 
 public class CustomerTest {
     private Customer cust;
-    private Bank bank;
-    private String firstName;
-    private String lastName;
-
+    private SavingsAccount newSavingsAccount;
+    private double initialBalance;
+    private String newSavingsAccountDescription;
+    private double ytdInterest;
     //test fixture
     @BeforeEach
     public void init() {
-        bank = new Bank("BEAM Bank");
-        firstName = "Cool";
-        lastName = "Dude";
-        Customer cust1 = new Customer(bank, firstName, lastName);
+        initialBalance = 0.0;
+        newSavingsAccountDescription = "Test Savings Account";
     }
-    //testing the constructor of the class Customer
+    //testing the constructor and methods in Constructor
     @Test
-    public void testCustomerContructor(){
-        Customer cust = new Customer(bank, firstName, lastName);
+    @DisplayName ("Customer test constructor")
+    public void testCustomerConstructor(){
+        Customer cust = new Customer(new Bank("BEAM Bank"), "Dude", "Cool");
+        assertEquals(new Bank("BEAM Bank"), cust.getBank());
+        assertEquals("Dude", cust.getLastName());
+        assertEquals("Cool", cust.getFirstName());
     }
-    //testing the constructor of the class Customer
     @Test
-    public void testytdFees(){
-        cust.ytdFees();
+    @DisplayName ("Customer test ytdInterest")
+    public void testYTDInterest(){
+        ytdInterest = cust.ytdInterest();
+        /*
+        It has been 126 days since January 1st, 2021 (today is May 7th.) So, the YTD interest of this account should
+        be ((balance)*(1 + (newSavingsAccount.getDefaultInterestRate() * 0.01)*(126/365)))
+         */
+        assertEquals(ytdInterest, (newSavingsAccount.getBalance())*(1 + (newSavingsAccount.getDefaultInterestRate() * 0.01)*(126/365)));
     }
-    //testing the constructor of the class Customer
     @Test
-    public void testytdInterest(){
-        cust.ytdInterest();
+    @DisplayName ("Customer test addSavingsAccount")
+    public void testAddSavingsAccount(){
+        newSavingsAccount = cust.addSavingsAccount(initialBalance, newSavingsAccountDescription);
+        assertEquals(initialBalance, newSavingsAccount.getBalance());
+        assertEquals(newSavingsAccountDescription, newSavingsAccount.getAccountDescription());
     }
-
 }
