@@ -40,15 +40,15 @@ class SavingsAccountTest {
     void testConstructors(){
         //test1 tests the SavingsAccount constructor that takes three parameters
         testSavingsAccount1 = new SavingsAccount(customer, initialBalance, testSavingsAccount1Description);
-        assertEquals(bank.getCustomer(testSavingsAccount1.getCustomerId()), customer);
-        assertEquals(testSavingsAccount1.getBalance(), initialBalance);
-        assertEquals(testSavingsAccount1.getAccountDescription(), testSavingsAccount1Description);
+        assertEquals(customer,bank.getCustomer(testSavingsAccount1.getCustomerId()));
+        assertEquals(initialBalance,testSavingsAccount1.getBalance());
+        assertEquals(testSavingsAccount1Description,testSavingsAccount1.getAccountDescription());
         //test2 tests the SavingsAccount constructor that takes four parameters
         testSavingsAccount2 = new SavingsAccount(customer, balance, testSavingsAccount2Description, interestRate);
-        assertEquals(bank.getCustomer(testSavingsAccount2.getCustomerId()), customer);
-        assertEquals(testSavingsAccount2.getBalance(), initialBalance);
-        assertEquals(testSavingsAccount2.getAccountDescription(), testSavingsAccount2Description);
-        assertEquals(testSavingsAccount2.getDefaultInterestRate(), interestRate);
+        assertEquals(bank.getCustomer(customer,testSavingsAccount2.getCustomerId()));
+        assertEquals(initialBalance,testSavingsAccount2.getBalance());
+        assertEquals(testSavingsAccount2Description,testSavingsAccount2.getAccountDescription());
+        assertEquals(interestRate,testSavingsAccount2.getDefaultInterestRate());
     }
 
     // Test a deposit of $10.00 works:
@@ -59,7 +59,7 @@ class SavingsAccountTest {
         final double amount = 10.00;
         savingsAccount.deposit( amount );
         final double finalBalance = savingsAccount.getBalance();
-        assertEquals( finalBalance, startingBalance + amount,
+        assertEquals( startingBalance + amount,finalBalance,
                 "Balance should be " +
                         (startingBalance+amount) + "but was " + finalBalance );
     }
@@ -72,7 +72,7 @@ class SavingsAccountTest {
         final double amount = 10.00;
         savingsAccount.withdraw( amount );
         final double finalBalance = savingsAccount.getBalance();
-        assertEquals( finalBalance, startingBalance - amount,
+        assertEquals( startingBalance - amount,finalBalance,
                 "Balance should be " +
                         (startingBalance-amount) + "but was " + finalBalance );
     }
